@@ -22,13 +22,29 @@ const currencies = [
   },
 ];
 
+const tipoDocumento = [
+	{
+	  value: '1',
+	  label: 'DNI',
+	},
+	{
+	  value: '2',
+	  label: 'RUC',
+	},
+	{
+	  value: '3',
+	  label: 'CE',
+	},
+  ];
+
 const Register = () => {
 
 	const [currency, setCurrency] = React.useState('1');
+	
 
-  const handleChange = (event) => {
-    setCurrency(event.target.value);
-  };
+	const handleChange = (event) => {
+		setCurrency(event.target.value);
+	};
 
 	return (
 		<AppFrame>
@@ -52,6 +68,12 @@ const Register = () => {
 							variant="outlined"
 							margin="dense"
 						/>
+						<TextField
+							id="input-with-icon-textfield"
+							label="Correo electrónico"
+							variant="outlined"
+							margin="dense"
+						/>
 					
 
 						<TextField
@@ -68,6 +90,44 @@ const Register = () => {
 								</MenuItem>
 							))}
 						</TextField>
+
+						<TextField
+							id="outlined-select-currency"
+							select
+							label="Tipo de documento"
+							value={currency}
+							margin="normal"
+							onChange={handleChange}
+						>
+							{tipoDocumento.map((option) => (
+								<MenuItem key={option.value} value={option.value}>
+									{option.label}
+								</MenuItem>
+							))}
+						</TextField>
+
+						<TextField
+							id="input-with-icon-textfield"
+							label="Documento"
+							variant="outlined"
+							margin="dense"
+						/>
+
+						<TextField
+							id="input-with-icon-textfield"
+							label="Teléfono"
+							variant="outlined"
+							margin="dense"
+						/>
+
+						<TextField
+						id="outlined-multiline-static"
+						label="Dirección"
+						multiline
+						rows={4}
+						variant="outlined"
+						margin="dense"
+						/>
 
 					</FormControl>
 

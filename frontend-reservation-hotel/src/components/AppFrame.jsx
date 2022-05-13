@@ -14,7 +14,28 @@ import MenuItem from '@mui/material/MenuItem';
 import Link from '@mui/material/Link';
 import { Link as LinkRouter } from 'react-router-dom';
 
-const pages = ['Inicio', 'Habitaciones', 'Reservas', 'Servicios', 'Contáctenos'];
+const pages = [
+	{
+		label: 'Inicio',
+		redirect: '/'
+	},
+	{
+		label: 'Habitaciones',
+		redirect: '/'
+	}, 
+	{
+		label: 'Reservas',
+		redirect: '/reservar'
+	},
+	{
+		label: 'Servicios',
+		redirect: '/'
+	}, 
+	{
+		label: 'Contáctenos',
+		redirect: '/'
+	}, 
+];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const AppFrame = ({ children }) => {
@@ -91,12 +112,22 @@ const AppFrame = ({ children }) => {
 									}}
 								>
 									{pages.map((page) => (
-										<MenuItem key={page} onClick={handleCloseNavMenu} >
-											<Typography textAlign="center">{page}</Typography>
+										<MenuItem key={page.label} onClick={handleCloseNavMenu} >
+											<Link 
+											component={LinkRouter}
+											to={page.redirect} 
+											color="inherit" 
+											aria-label="menu"
+											underline="none">{page.label}</Link>
 										</MenuItem>
 									))}
 									<MenuItem onClick={handleCloseNavMenu} >
-										<Typography textAlign="center">Iniciar sesión</Typography>
+										<Link 
+											component={LinkRouter}
+											to='/iniciar-sesion' 
+											color="inherit" 
+											aria-label="menu"
+											underline="none">Iniciar sesión</Link>
 									</MenuItem>
 								</Menu>
 							</Box>
@@ -120,13 +151,14 @@ const AppFrame = ({ children }) => {
 							</Typography>
 							<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
 								{pages.map((page) => (
-									<Button
-										key={page}
-										onClick={handleCloseNavMenu}
-										sx={{ my: 2, color: 'white', display: 'block' }}
-									>
-										{page}
-									</Button>
+									<Link 
+									key={page.label}
+									sx={{ my: 2, color: 'white', display: 'block', paddingLeft: 4 }}
+									component={LinkRouter}
+									to={page.redirect} 
+									color="inherit" 
+									aria-label="menu"
+									underline="none">{page.label}</Link>
 								))}
 							</Box>
 							{
