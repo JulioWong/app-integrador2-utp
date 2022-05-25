@@ -12,7 +12,9 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Link from '@mui/material/Link';
-import { Link as LinkRouter } from 'react-router-dom';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Link as LinkRouter, useNavigate } from 'react-router-dom';
+import { Badge } from '@mui/material';
 
 const pages = [
 	{
@@ -56,6 +58,9 @@ const AppFrame = ({ children }) => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+
+	const navigate = useNavigate();
 
   return (
 		<div>
@@ -161,13 +166,17 @@ const AppFrame = ({ children }) => {
 									underline="none">{page.label}</Link>
 								))}
 							</Box>
-							{
-								(1 == 0) ? (
+							
+							<Badge badgeContent={1} color="error" sx={{mr:4}} onClick={() => navigate("/carrito", { replace: true })}>
+								<ShoppingCartIcon style={{ color: 'white' }} />
+							</Badge>
 
+							{
+								(1 == 1) ? (
 									<Box sx={{ flexGrow: 0 }}>
 										<Tooltip title="Open settings">
 											<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-												<Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+												<Avatar alt="Julio" src="/static/images/avatar/2.jpg" />
 											</IconButton>
 										</Tooltip>
 										<Menu

@@ -30,11 +30,9 @@ const currencies = [
 const Reservation = () => {
 	const [currency, setCurrency] = React.useState('1');
 	
-
 	const handleChange = (event) => {
 		setCurrency(event.target.value);
 	};
-
 	const [value, setValue] = React.useState(null);
 
 	return (
@@ -43,7 +41,7 @@ const Reservation = () => {
 				<Box
 					component="form"
 					noValidate
-					sx={{m:3, p:2,  border: '1px dashed grey' }}
+					sx={{m:3, p:2,  border: '1px dashed #d8d8d8' }}
 					autoComplete="off"
 				>
 					<Grid container spacing={2} >
@@ -141,10 +139,87 @@ const Reservation = () => {
 							</FormControl>
 						</Grid>
 						<Grid item xs={12} md={2}>
-							<Button variant="contained" style={{width:"100%",marginTop:12}}>Buscar</Button>
+							<Button variant="contained" style={{width:"100%",marginTop:12, backgroundColor: "#D6B637"}}>Buscar</Button>
 						</Grid>
 					</Grid>
 				</Box>
+
+
+				{
+					(1==1) ? (
+						<Box>
+							<Box
+								component={Grid}
+								sx={{m:3, p:2, borderRadius: 1, color:"#707070" }}
+								boxShadow={2}
+							>
+								<Grid container>
+									<Grid item xs={12} md={3} textAlign="center">
+										<img src="/1.jpg" width="100%" alt="" />
+									</Grid>
+									<Grid item xs={12} md={9}>
+										<Box sx={{pb:1, pl:2}} fontWeight="bold">
+											STANDARD MATRIMONIAL
+										</Box>
+										<Box sx={{pb:1, pl:2}}>
+											<Box component="span" fontWeight="bold">Acomodación máxima:</Box> 4 huéspedes (máximo 4 adultos, 3 niños, 2 infantes)
+										</Box>
+										<Box sx={{pb:1, pl:2}}>
+											Habitaciones confortables diseñadas para alojar a una persona, cuenta con una cama individual, equipadas con calefacción, insonorizadas, baño privado, ducha caliente, Smart Tv y televisión por cable, corriente eléctrica de 220V, teléfono e internet inalámbrico. Todas las tarifas incluyen desayuno diario, acceso libre al gimnasio y centro de negocios.
+										</Box>
+										<Grid container flexDirection="row-reverse" alignContent="center" alignItems="center">
+											<Grid>
+												<Button variant="contained" href='/detalle/1'>Ver detalle</Button>
+											</Grid>
+											<Grid sx={{p:1, fontSize:25}} fontWeight="bold">
+												S/ 230.60
+											</Grid>
+										</Grid>
+									</Grid>
+								</Grid>
+							</Box>
+
+							<Box
+								component={Grid}
+								sx={{m:3, p:2, borderRadius: 1, color:"#707070" }}
+								boxShadow={2}
+							>
+								<Grid container>
+									<Grid item xs={12} md={3} textAlign="center">
+										<img src="/1.jpg" width="100%" alt=""/>
+									</Grid>
+									<Grid item xs={12} md={9}>
+										<Box sx={{pb:1, pl:2}} fontWeight="bold">
+											STANDARD MATRIMONIAL
+										</Box>
+										<Box sx={{pb:1, pl:2}}>
+											<Box component="span" fontWeight="bold">Acomodación máxima:</Box> 4 huéspedes (máximo 4 adultos, 3 niños, 2 infantes)
+										</Box>
+										<Box sx={{pb:1, pl:2}}>
+											Habitaciones confortables diseñadas para alojar a una persona, cuenta con una cama individual, equipadas con calefacción, insonorizadas, baño privado, ducha caliente, Smart Tv y televisión por cable, corriente eléctrica de 220V, teléfono e internet inalámbrico. Todas las tarifas incluyen desayuno diario, acceso libre al gimnasio y centro de negocios.
+										</Box>
+										<Grid container flexDirection="row-reverse" alignContent="center" alignItems="center">
+											<Grid>
+												<Button variant="contained" href='/detalle/1'>Ver detalle</Button>
+											</Grid>
+											<Grid sx={{p:1, fontSize:25}} fontWeight="bold">
+												S/ 230.60
+											</Grid>
+										</Grid>
+									</Grid>
+								</Grid>
+							</Box>
+						</Box>
+					) : (
+						<Box
+							component={Grid}
+							sx={{m:3, p:2, borderRadius: 1, color:"#707070" }}
+							boxShadow={2}
+						>
+							<img src="/search.png" width="100%" alt=""/>
+						</Box>
+					)
+				}
 			</Container>
 		</AppFrame>
 	)
