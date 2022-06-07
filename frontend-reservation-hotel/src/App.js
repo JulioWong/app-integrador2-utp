@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes as Switch, Route } from 'react-router-d
 import Reservation from './pages/Reservation'
 import Detail from './pages/Detail'
 import ShoppingCar from './pages/ShoppingCar'
+import Thanks from './pages/Thanks'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route exact path="/reservar" element={<Reservation />} />
         <Route exact path="/carrito" element={<ShoppingCar />} />
         <Route exact path="/detalle/:id" element={<Detail />} />
+        <Route exact path="/reserva/:id" element={<Thanks />} />
         <Route path="*" element={<NoFound />} />
       </Switch>
     </Router>

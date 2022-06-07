@@ -11,7 +11,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 import './../style.css';
-import { Container} from '@mui/material';
+import { Button, Container, IconButton} from '@mui/material';
+
+import DeleteIcon  from '@mui/icons-material/Delete';
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -34,8 +36,10 @@ const ShoppingCar = () => {
             <TableCell></TableCell>
             <TableCell align="left">HABITACIÓN</TableCell>
             <TableCell align="center">CANTIDAD</TableCell>
+            <TableCell align="right"></TableCell>
             <TableCell align="right">PRECIO</TableCell>
             <TableCell align="right">TOTAL</TableCell>
+            
           </TableRow>
         </TableHead>
         <TableBody>
@@ -48,6 +52,11 @@ const ShoppingCar = () => {
               </TableCell>
               <TableCell align="left">STANDARD MATRIMONIAL</TableCell>
               <TableCell align="center" style={{fontWeight:500}}>1</TableCell>
+              <TableCell align="right" style={{fontWeight:500}}>
+                <IconButton aria-label="delete">
+                  <DeleteIcon />
+                </IconButton>
+              </TableCell>
               <TableCell align="right" style={{fontWeight:500}}>S/250.00</TableCell>
               <TableCell align="right" style={{fontWeight:500}}>S/250.00</TableCell>
             </TableRow>
@@ -55,22 +64,26 @@ const ShoppingCar = () => {
 
 
               <TableRow>
-                <TableCell rowSpan={4} />
-                <TableCell colSpan={3}>Subtotal</TableCell>
+                <TableCell rowSpan={5} />
+                <TableCell colSpan={4}>Subtotal</TableCell>
                 <TableCell align="right">S/ {610.88}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell colSpan={2}>Impuesto</TableCell>
+                <TableCell colSpan={3}>Impuesto</TableCell>
                 <TableCell align="right">{`18%`}</TableCell>
                 <TableCell align="right">S/ {42.76}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell colSpan={3}>Total</TableCell>
+                <TableCell colSpan={4}>Total</TableCell>
                 <TableCell align="right">S/ {653.64}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
         </TableContainer>
+
+        <div style={{textAlign:"right", marginTop:30}}>
+          <Button variant="contained" href='/reserva/1' size="large">Confirmar reserva</Button>
+        </div>
       </Container>
     </AppFrame>
   )

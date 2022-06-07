@@ -172,7 +172,7 @@ const AppFrame = ({ children }) => {
 							</Badge>
 
 							{
-								(1 == 1) ? (
+								(1 == 2) ? (
 									<Box sx={{ flexGrow: 0 }}>
 										<Tooltip title="Open settings">
 											<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
