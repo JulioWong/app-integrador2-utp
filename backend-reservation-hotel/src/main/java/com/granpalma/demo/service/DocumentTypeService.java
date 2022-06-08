@@ -2,9 +2,9 @@ package com.granpalma.demo.service;
 
 import java.util.List;
 
-import com.granpalma.demo.entity.DocumentType;
+import com.granpalma.dto.demo.dto.DocumentTypeResponse;
 
 public interface DocumentTypeService {
 
-	public List<DocumentType> getAllDocumentsTypes();
+	public List<DocumentTypeResponse> getAllDocumentsTypes();
 }

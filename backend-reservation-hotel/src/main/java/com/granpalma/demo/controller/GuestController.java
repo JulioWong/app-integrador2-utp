@@ -1,5 +1,7 @@
 package com.granpalma.demo.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.granpalma.demo.entity.Guest;
 import com.granpalma.demo.service.GuestService;
+import com.granpalma.dto.demo.dto.GuestLoginRequest;
+import com.granpalma.dto.demo.dto.GuestLoginResponse;
+import com.granpalma.dto.demo.dto.GuestRequest;
+import com.granpalma.dto.demo.dto.GuestResponse;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -27,15 +32,19 @@ public class GuestController {
 	private GuestService guestService;
 	
 	@PostMapping("/guest")
-	public ResponseEntity<?> getAllGuest(@RequestBody Guest guest) {
+	public ResponseEntity<?> getAllGuest(@Valid @RequestBody GuestRequest guestRequest) {
 		
-		System.out.println("Direccion: ->"+guest.getAddress());
-		System.out.println("Direccion: ->"+guest.getCountry().getDescription());
+		GuestResponse guestResponse = guestService.saveGuest(guestRequest);
 		
-		
-		guestService.saveGuest(guest);
-		
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		if (guestResponse != null) return new ResponseEntity<>(guestResponse, HttpStatus.CREATED);
+
+		return new ResponseEntity<>(guestResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+	@PostMapping("/guest/login")
+	public ResponseEntity<?> loginGuest(@RequestBody GuestLoginRequest guestRequest) {
+		GuestLoginResponse guestResponse = guestService.login(guestRequest);
+		
+		return new ResponseEntity<>(guestResponse, HttpStatus.OK);
+	}
 }

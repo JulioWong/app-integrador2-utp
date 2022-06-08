@@ -2,10 +2,10 @@ package com.granpalma.demo.service;
 
 import java.util.List;
 
-import com.granpalma.demo.entity.Country;
+import com.granpalma.dto.demo.dto.CountryResponse;
 
 public interface CountryService {
 	
-	public List<Country> getCountries();
+	public List<CountryResponse> getCountries();
 	
 }

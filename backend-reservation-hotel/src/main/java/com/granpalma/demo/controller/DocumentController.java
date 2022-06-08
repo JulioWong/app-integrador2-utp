@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.granpalma.demo.entity.DocumentType;
 import com.granpalma.demo.service.DocumentTypeService;
+import com.granpalma.dto.demo.dto.DocumentTypeResponse;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -29,7 +29,7 @@ public class DocumentController {
 	
 	@GetMapping("/document_type")
 	public ResponseEntity<?> getAllDocumentType() {
-		List<DocumentType> documentTypesList = documentTypeService.getAllDocumentsTypes();
+		List<DocumentTypeResponse> documentTypesList = documentTypeService.getAllDocumentsTypes();
 		
 		if (documentTypesList != null && documentTypesList.size() > 0) {
 			return new ResponseEntity<>(documentTypesList, HttpStatus.OK);

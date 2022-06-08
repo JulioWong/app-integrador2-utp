@@ -1,8 +1,13 @@
 package com.granpalma.demo.service;
 
-import com.granpalma.demo.entity.Guest;
+import com.granpalma.dto.demo.dto.GuestLoginRequest;
+import com.granpalma.dto.demo.dto.GuestLoginResponse;
+import com.granpalma.dto.demo.dto.GuestRequest;
+import com.granpalma.dto.demo.dto.GuestResponse;
 
 public interface GuestService {
 
-	public void saveGuest(Guest guest);
+	public GuestResponse saveGuest(GuestRequest guest);
+	
+	public GuestLoginResponse login(GuestLoginRequest guest);
 }

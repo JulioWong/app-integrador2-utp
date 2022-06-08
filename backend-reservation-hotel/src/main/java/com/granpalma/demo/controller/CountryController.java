@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.granpalma.demo.entity.Country;
 import com.granpalma.demo.service.CountryService;
+import com.granpalma.dto.demo.dto.CountryResponse;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -28,7 +28,7 @@ public class CountryController {
 	
 	@GetMapping("/country")
 	public ResponseEntity<?> getAllCountries() {
-		List<Country> contriesList = countryService.getCountries();
+		List<CountryResponse> contriesList = countryService.getCountries();
 		
 		if (contriesList != null && contriesList.size() > 0) {
 			return new ResponseEntity<>(contriesList, HttpStatus.OK);
