@@ -45,7 +45,7 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
 	    http.formLogin().disable();
 	    
 	    http.csrf().disable()
-		.authorizeRequests().antMatchers("/api/country").authenticated()
+		.authorizeRequests().antMatchers("/api/reservation").authenticated()
 		.and()
 		.exceptionHandling().authenticationEntryPoint(entryPoint)
 		.and()

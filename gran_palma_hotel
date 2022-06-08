@@ -1,0 +1,163 @@
+-- gran_palma_hotel.estados_reservas definition
+
+CREATE TABLE `estados_reservas` (
+  `id_estado_reserva` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id_estado_reserva`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- gran_palma_hotel.hoteles definition
+
+CREATE TABLE `hoteles` (
+  `id_hotel` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(500) DEFAULT NULL,
+  `descripcion` varchar(500) DEFAULT NULL,
+  `direccion` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id_hotel`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+
+-- gran_palma_hotel.pais definition
+
+CREATE TABLE `pais` (
+  `id_pais` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id_pais`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+
+-- gran_palma_hotel.roles definition
+
+CREATE TABLE `roles` (
+  `id_rol` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id_rol`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- gran_palma_hotel.tipos_camas definition
+
+CREATE TABLE `tipos_camas` (
+  `id_tipo_cama` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id_tipo_cama`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- gran_palma_hotel.tipos_documentos definition
+
+CREATE TABLE `tipos_documentos` (
+  `id_tipo_documento` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id_tipo_documento`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+
+-- gran_palma_hotel.tipos_habitaciones definition
+
+CREATE TABLE `tipos_habitaciones` (
+  `id_tipo_habitacion` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id_tipo_habitacion`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- gran_palma_hotel.habitaciones definition
+
+CREATE TABLE `habitaciones` (
+  `id_habitacion` int(11) NOT NULL AUTO_INCREMENT,
+  `id_tipo_cama` int(11) DEFAULT NULL,
+  `id_hotel` int(11) DEFAULT NULL,
+  `descripcion` varchar(500) DEFAULT NULL,
+  `costo` double DEFAULT NULL,
+  `imagen` varchar(500) DEFAULT NULL,
+  `id_tipo_habitacion` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_habitacion`),
+  KEY `habitaciones_FK` (`id_hotel`),
+  KEY `habitaciones_FK_1` (`id_tipo_habitacion`),
+  KEY `habitaciones_FK_2` (`id_tipo_cama`),
+  CONSTRAINT `habitaciones_FK` FOREIGN KEY (`id_hotel`) REFERENCES `hoteles` (`id_hotel`),
+  CONSTRAINT `habitaciones_FK_1` FOREIGN KEY (`id_tipo_habitacion`) REFERENCES `tipos_habitaciones` (`id_tipo_habitacion`),
+  CONSTRAINT `habitaciones_FK_2` FOREIGN KEY (`id_tipo_cama`) REFERENCES `tipos_camas` (`id_tipo_cama`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- gran_palma_hotel.huespedes definition
+
+CREATE TABLE `huespedes` (
+  `id_huesped` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(500) DEFAULT NULL,
+  `apellido` varchar(500) DEFAULT NULL,
+  `id_pais` int(11) DEFAULT NULL,
+  `id_tipo_documento` int(11) DEFAULT NULL,
+  `numero_documento` varchar(100) DEFAULT NULL,
+  `direccion` varchar(500) DEFAULT NULL,
+  `telefono` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `contrasenia` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id_huesped`),
+  KEY `huespedes_FK` (`id_tipo_documento`),
+  KEY `huespedes_FK_1` (`id_pais`),
+  CONSTRAINT `huespedes_FK` FOREIGN KEY (`id_tipo_documento`) REFERENCES `tipos_documentos` (`id_tipo_documento`),
+  CONSTRAINT `huespedes_FK_1` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id_pais`)
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+
+
+-- gran_palma_hotel.usuarios definition
+
+CREATE TABLE `usuarios` (
+  `id_usuario` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(500) DEFAULT NULL,
+  `apellido` varchar(500) DEFAULT NULL,
+  `usuario` varchar(500) DEFAULT NULL,
+  `contrasenia` varchar(500) DEFAULT NULL,
+  `estado` bit(1) DEFAULT NULL,
+  `id_rol` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_usuario`),
+  KEY `usuarios_FK` (`id_rol`),
+  CONSTRAINT `usuarios_FK` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id_rol`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- gran_palma_hotel.reservas definition
+
+CREATE TABLE `reservas` (
+  `id_reserva` int(11) NOT NULL AUTO_INCREMENT,
+  `id_huesped` int(11) DEFAULT NULL,
+  `fecha_creacion` datetime DEFAULT NULL,
+  `fecha_llegada` datetime DEFAULT NULL,
+  `fecha_salida` datetime DEFAULT NULL,
+  `id_estado_reserva` int(11) DEFAULT NULL,
+  `id_habitacion` int(11) DEFAULT NULL,
+  `id_usuario` int(11) DEFAULT NULL,
+  `cantidad_adultos` int(11) DEFAULT NULL,
+  `cantidad_ninos` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_reserva`),
+  KEY `reservas_FK` (`id_usuario`),
+  KEY `reservas_FK_1` (`id_habitacion`),
+  KEY `reservas_FK_2` (`id_huesped`),
+  KEY `reservas_FK_3` (`id_estado_reserva`),
+  CONSTRAINT `reservas_FK` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`),
+  CONSTRAINT `reservas_FK_1` FOREIGN KEY (`id_habitacion`) REFERENCES `habitaciones` (`id_habitacion`),
+  CONSTRAINT `reservas_FK_2` FOREIGN KEY (`id_huesped`) REFERENCES `huespedes` (`id_huesped`),
+  CONSTRAINT `reservas_FK_3` FOREIGN KEY (`id_estado_reserva`) REFERENCES `estados_reservas` (`id_estado_reserva`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- gran_palma_hotel.pagos definition
+
+CREATE TABLE `pagos` (
+  `id_pago` int(11) NOT NULL AUTO_INCREMENT,
+  `id_reserva` int(11) DEFAULT NULL,
+  `monto` double DEFAULT NULL,
+  `fecha_abono` datetime DEFAULT NULL,
+  `numero_operacion` varchar(100) DEFAULT NULL,
+  `banco` varchar(100) DEFAULT NULL,
+  `id_usuario` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_pago`),
+  KEY `pagos_FK` (`id_usuario`),
+  KEY `pagos_FK_1` (`id_reserva`),
+  CONSTRAINT `pagos_FK` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`),
+  CONSTRAINT `pagos_FK_1` FOREIGN KEY (`id_reserva`) REFERENCES `reservas` (`id_reserva`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -1,0 +1,130 @@
+{
+	"info": {
+		"_postman_id": "5c2e6368-9eb6-4708-91d1-01e067e473ba",
+		"name": "INTEGRADOR-2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "215292"
+	},
+	"item": [
+		{
+			"name": "Documentos de identidad",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "encodedPassword",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8040/api/document_type",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8040",
+					"path": [
+						"api",
+						"document_type"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Paises",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8040/api/country",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8040",
+					"path": [
+						"api",
+						"country"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registrar Huesped",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Julio\",\r\n    \"lastName\": \"Wong\",\r\n    \"countryId\": 1,\r\n    \"documentTypeId\": 2,\r\n    \"documentNumber\": \"46742689\",\r\n    \"address\": \"Av test 123\",\r\n    \"phone\": \"954127922\",\r\n    \"email\": \"julioo.wong2@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8040/api/guest",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8040",
+					"path": [
+						"api",
+						"guest"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Iniciar sesión",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"julioo.wong@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8040/api/guest/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8040",
+					"path": [
+						"api",
+						"guest",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
