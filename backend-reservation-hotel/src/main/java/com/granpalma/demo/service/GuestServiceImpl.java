@@ -10,6 +10,7 @@ import com.granpalma.demo.entity.Country;
 import com.granpalma.demo.entity.DocumentType;
 import com.granpalma.demo.entity.Guest;
 import com.granpalma.demo.repository.GuestRepository;
+import com.granpalma.demo.security.JwtGenerator;
 import com.granpalma.dto.demo.dto.GuestLoginRequest;
 import com.granpalma.dto.demo.dto.GuestLoginResponse;
 import com.granpalma.dto.demo.dto.GuestRequest;
@@ -17,6 +18,9 @@ import com.granpalma.dto.demo.dto.GuestResponse;
 
 @Service
 public class GuestServiceImpl implements GuestService{
+	
+	@Autowired 
+	private JwtGenerator jwtGenerator;
 
 	@Autowired
 	private GuestRepository guestRepository;
@@ -64,18 +68,19 @@ public class GuestServiceImpl implements GuestService{
 
 	@Override
 	public GuestLoginResponse login(GuestLoginRequest guestRequest) {
-		Optional<Guest> guest2 = guestRepository.findByEmail(guestRequest.getEmail());
+		Optional<Guest> guestByEmail = guestRepository.findByEmail(guestRequest.getEmail());
 			
 		GuestLoginResponse guestResponse = new GuestLoginResponse();
 		
-		if (!guest2.isPresent() || !passwordEncoder.matches(guestRequest.getPassword(), guest2.get().getPassword())) {
+		if (!guestByEmail.isPresent() || !passwordEncoder.matches(guestRequest.getPassword(), guestByEmail.get().getPassword())) {
 			guestResponse.setErrors(new String[]{"El usuario o contraseña son incorrectas"});
 				
 		} else {
-			guestResponse.setId(guest2.get().getId());
-			guestResponse.setName(guest2.get().getName());
-			guestResponse.setLastName(guest2.get().getLastName());
-			guestResponse.setEmail(guest2.get().getEmail());
+			guestResponse.setToken(jwtGenerator.generate(guestByEmail.get()));
+			guestResponse.setId(guestByEmail.get().getId());
+			guestResponse.setName(guestByEmail.get().getName());
+			guestResponse.setLastName(guestByEmail.get().getLastName());
+			guestResponse.setEmail(guestByEmail.get().getEmail());
 		}
 		
 		return guestResponse;
