@@ -17,8 +17,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@Override
-	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-			org.springframework.http.HttpHeaders headers, HttpStatus status, WebRequest request) {
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(
+			MethodArgumentNotValidException ex,
+			org.springframework.http.HttpHeaders headers, HttpStatus status, 
+			WebRequest request) {
 		
 		Map<String, List<String>> body = new HashMap<>();
 

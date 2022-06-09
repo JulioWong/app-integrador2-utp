@@ -19,7 +19,8 @@ import io.swagger.v3.oas.annotations.info.Info;
 
 @RestController
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
-@OpenAPIDefinition(info = @Info(title = "Gran Palma hoteles", version = "2.0", description = "Documents"))
+@OpenAPIDefinition(info = @Info(
+		title = "Gran Palma hoteles", version = "2.0", description = "Documents"))
 @RequestMapping("/api")
 public class DocumentController {
 
@@ -29,7 +30,8 @@ public class DocumentController {
 	
 	@GetMapping("/document_type")
 	public ResponseEntity<?> getAllDocumentType() {
-		List<DocumentTypeResponse> documentTypesList = documentTypeService.getAllDocumentsTypes();
+		List<DocumentTypeResponse> documentTypesList = 
+				documentTypeService.getAllDocumentsTypes();
 		
 		if (documentTypesList != null && documentTypesList.size() > 0) {
 			return new ResponseEntity<>(documentTypesList, HttpStatus.OK);

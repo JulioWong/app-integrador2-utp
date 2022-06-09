@@ -9,6 +9,7 @@ import com.granpalma.demo.entity.Guest;
 
 public interface GuestRepository extends CrudRepository<Guest, Long> {
 
-	public Optional<Guest> findByDocumentTypeAndDocumentNumber(DocumentType documentType, String documentNumber);
+	public Optional<Guest> findByDocumentTypeAndDocumentNumber(
+			DocumentType documentType, String documentNumber);
 	public Optional<Guest> findByEmail(String email);
 }

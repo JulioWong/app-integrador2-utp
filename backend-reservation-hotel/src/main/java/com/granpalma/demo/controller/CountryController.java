@@ -19,7 +19,8 @@ import io.swagger.v3.oas.annotations.info.Info;
 
 @RestController
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
-@OpenAPIDefinition(info = @Info(title = "Gran Palma hoteles", version = "2.0", description = "Countries"))
+@OpenAPIDefinition(info = @Info(
+		title = "Gran Palma hoteles", version = "2.0", description = "Countries"))
 @RequestMapping("/api")
 public class CountryController {
 

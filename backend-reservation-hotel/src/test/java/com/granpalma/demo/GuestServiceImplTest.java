@@ -56,8 +56,9 @@ public class GuestServiceImplTest {
 	}
 	
 	@Test
-	public void saveGuestReturnErrorByDocumentNumber() {
-		when(guestRepository.findByDocumentTypeAndDocumentNumber(any(), any())).thenReturn(guestData());
+	public void saveGuestReturnErrorByDocumentNumberExist() {
+		when(guestRepository.findByDocumentTypeAndDocumentNumber(
+				any(), any())).thenReturn(guestData());
 		
 		GuestRequest guestRequest = new GuestRequest();
 		GuestResponse guestResponse = guestService.saveGuest(guestRequest);
@@ -65,8 +66,9 @@ public class GuestServiceImplTest {
 	}
 	
 	@Test
-	public void saveGuestReturnErrorByEmail() {
-		when(guestRepository.findByDocumentTypeAndDocumentNumber(any(), any())).thenReturn(Optional.empty());
+	public void saveGuestReturnErrorByEmailExist() {
+		when(guestRepository.findByDocumentTypeAndDocumentNumber(
+				any(), any())).thenReturn(Optional.empty());
 		when(guestRepository.findByEmail(any())).thenReturn(guestData());
 		
 		GuestRequest guestRequest = new GuestRequest();
@@ -77,7 +79,8 @@ public class GuestServiceImplTest {
 	@Test
 	public void saveGuestReturnSuccess() {
 		Guest guestDB = guestData().get();
-		when(guestRepository.findByDocumentTypeAndDocumentNumber(any(), any())).thenReturn(Optional.empty());
+		when(guestRepository.findByDocumentTypeAndDocumentNumber(
+				any(), any())).thenReturn(Optional.empty());
 		when(guestRepository.findByEmail(any())).thenReturn(Optional.empty());	
 		when(guestRepository.save(any())).thenReturn(guestDB);
 		
@@ -89,22 +92,24 @@ public class GuestServiceImplTest {
 	
 	
 	@Test
-	public void loginGuestReturnErrorByEmail() {
+	public void loginGuestReturnErrorByEmailNotExist() {
 		when(guestRepository.findByEmail(any())).thenReturn(Optional.empty());
 		
 		GuestLoginRequest guestRequest = new GuestLoginRequest();
 		GuestLoginResponse guestResponse = guestService.login(guestRequest);
-		assertEquals(guestResponse.getErrors()[0], "El usuario o contraseña son incorrectas");
+		assertEquals(guestResponse.getErrors()[0], 
+				"El usuario o contraseña son incorrectas");
 	}
 	
 	@Test
-	public void loginGuestReturnErrorByPassword() {
+	public void loginGuestReturnErrorByPasswordIncorrect() {
 		when(guestRepository.findByEmail(any())).thenReturn(guestData());
 		
 		GuestLoginRequest guestRequest = new GuestLoginRequest();
 		guestRequest.setPassword(WRONG_PASSWORD);
 		GuestLoginResponse guestResponse = guestService.login(guestRequest);
-		assertEquals(guestResponse.getErrors()[0], "El usuario o contraseña son incorrectas");
+		assertEquals(guestResponse.getErrors()[0], 
+				"El usuario o contraseña son incorrectas");
 	}
 	
 	@Test

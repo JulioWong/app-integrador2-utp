@@ -24,7 +24,8 @@ import io.swagger.v3.oas.annotations.info.Info;
 
 @RestController
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
-@OpenAPIDefinition(info = @Info(title = "Gran Palma hoteles", version = "2.0", description = "Guest"))
+@OpenAPIDefinition(info = @Info(
+		title = "Gran Palma hoteles", version = "2.0", description = "Guest"))
 @RequestMapping("/api")
 public class GuestController {
 
@@ -36,7 +37,8 @@ public class GuestController {
 		
 		GuestResponse guestResponse = guestService.saveGuest(guestRequest);
 		
-		if (guestResponse != null) return new ResponseEntity<>(guestResponse, HttpStatus.CREATED);
+		if (guestResponse != null) return new ResponseEntity<>(
+				guestResponse, HttpStatus.CREATED);
 
 		return new ResponseEntity<>(guestResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
