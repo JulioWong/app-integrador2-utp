@@ -1,0 +1,7 @@
+const actions = {
+  REGISTER_GUEST : "REGISTER_GUEST",
+  CURRENT_GUEST : "CURRENT_GUEST",
+  COUNTRIES: "COUNTRIES",
+  DOCUMENTS: "DOCUMENTS"
+}
+export default actions;

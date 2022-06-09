@@ -7,6 +7,7 @@ public class GuestResponse implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private int id;
+	private int typeError;
 	private String[] errors;
 
 	public int getId() {
@@ -23,5 +24,13 @@ public class GuestResponse implements Serializable {
 
 	public void setErrors(String[] errors) {
 		this.errors = errors;
+	}
+
+	public int getTypeError() {
+		return typeError;
+	}
+
+	public void setTypeError(int typeError) {
+		this.typeError = typeError;
 	}
 }

@@ -36,12 +36,14 @@ public class GuestServiceImpl implements GuestService{
 		Optional<Guest> guestByDocumentTypeAndDocumentNumber = guestRepository.findByDocumentTypeAndDocumentNumber(documentType, guestRequest.getDocumentNumber());
 		
 		if (guestByDocumentTypeAndDocumentNumber.isPresent()) {
+			guestResponse.setTypeError(1);
 			guestResponse.setErrors(new String[]{"El documento ingresado ya se encuentra registrado"});
 			
 		} else {
 			Optional<Guest> guestByEmail = guestRepository.findByEmail(guestRequest.getEmail());
 			
 			if (guestByEmail.isPresent()) {
+				guestResponse.setTypeError(2);
 				guestResponse.setErrors(new String[]{"El correo electrónico ingresado ya se encuentra registrado"});
 				
 			} else {

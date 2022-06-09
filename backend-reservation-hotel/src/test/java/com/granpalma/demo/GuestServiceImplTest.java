@@ -61,8 +61,7 @@ public class GuestServiceImplTest {
 		
 		GuestRequest guestRequest = new GuestRequest();
 		GuestResponse guestResponse = guestService.saveGuest(guestRequest);
-
-		assertEquals(guestResponse.getErrors()[0], "El documento ingresado ya se encuentra registrado");
+		assertEquals(guestResponse.getTypeError(), 1);
 	}
 	
 	@Test
@@ -72,7 +71,7 @@ public class GuestServiceImplTest {
 		
 		GuestRequest guestRequest = new GuestRequest();
 		GuestResponse guestResponse = guestService.saveGuest(guestRequest);
-		assertEquals(guestResponse.getErrors()[0], "El correo electrónico ingresado ya se encuentra registrado");
+		assertEquals(guestResponse.getTypeError(), 2);
 	}
 	
 	@Test

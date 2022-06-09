@@ -6,7 +6,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 public class GuestRequest implements Serializable {
 
@@ -15,13 +14,11 @@ public class GuestRequest implements Serializable {
 	@Valid
 	@NotNull(message = "El nombre es requerido")
 	@NotBlank(message = "El nombre no puede estar vacío")
-	@Pattern(regexp="^[A-Za-z]*$",message = "El nombre debe ser texto")
 	private String name;
 	
 	@Valid
 	@NotNull(message = "El apellido es requerido")
 	@NotBlank(message = "El apellido no puede estar vacío")
-	@Pattern(regexp="^[A-Za-z]*$",message = "El apellido debe ser texto")
 	private String lastName;
 	
 	@Valid

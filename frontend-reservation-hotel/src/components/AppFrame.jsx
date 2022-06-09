@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { connect } from 'react-redux'
+
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,6 +17,8 @@ import Link from '@mui/material/Link';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Link as LinkRouter, useNavigate } from 'react-router-dom';
 import { Badge } from '@mui/material';
+
+import { logoutGuest } from '../redux/actions/guestActions'
 
 const pages = [
 	{
@@ -38,9 +42,9 @@ const pages = [
 		redirect: '/'
 	}, 
 ];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const AppFrame = ({ children }) => {
+const AppFrame = ({ children, currentGuest, logoutGuest }) => {
+	const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -59,8 +63,10 @@ const AppFrame = ({ children }) => {
     setAnchorElUser(null);
   };
 
-
-	const navigate = useNavigate();
+	const handlerLogout = () => {
+		logoutGuest();
+		navigate('/')
+	}
 
   return (
 		<div>
@@ -172,11 +178,11 @@ const AppFrame = ({ children }) => {
 							</Badge>
 
 							{
-								(1 == 2) ? (
+								(currentGuest.id > 0) ? (
 									<Box sx={{ flexGrow: 0 }}>
 										<Tooltip title="Open settings">
 											<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-												<Avatar alt="Julio" src="/static/images/avatar/2.jpg" />
+												<Avatar alt={currentGuest.name} src="/static/images/avatar/2.jpg" />
 											</IconButton>
 										</Tooltip>
 										<Menu
@@ -195,11 +201,12 @@ const AppFrame = ({ children }) => {
 											open={Boolean(anchorElUser)}
 											onClose={handleCloseUserMenu}
 										>
-											{settings.map((setting) => (
-												<MenuItem key={setting} onClick={handleCloseUserMenu}>
-													<Typography textAlign="center">{setting}</Typography>
-												</MenuItem>
-											))}
+											<MenuItem onClick={handlerLogout}>
+												<Typography textAlign="center">Mis reservas</Typography>
+											</MenuItem>
+											<MenuItem onClick={handlerLogout}>
+												<Typography textAlign="center">Salir</Typography>
+											</MenuItem>
 										</Menu>
 									</Box>
 
@@ -223,4 +230,13 @@ const AppFrame = ({ children }) => {
 		</div>
   );
 };
-export default AppFrame;
+
+const mapStateToProps = state => ({
+	currentGuest: state.guest.currentGuest
+})
+
+const mapDispachToProps = {
+	logoutGuest
+}
+
+export default connect(mapStateToProps, mapDispachToProps)(AppFrame);
