@@ -18,7 +18,6 @@ public class RoomAvailableRequest {
 	
 	@Valid
 	@NotNull(message = "La cantidad de personas es requerido")
-	@NotBlank(message = "La cantidad de personas no puede estar vacío")
 	private int quantity;
 	
 	public String getSince() {

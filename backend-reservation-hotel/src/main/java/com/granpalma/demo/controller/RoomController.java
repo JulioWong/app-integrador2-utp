@@ -2,6 +2,8 @@ package com.granpalma.demo.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +34,7 @@ public class RoomController {
 	private RoomService roomService;
 	
 	@PostMapping("/hotel/{id}/room")
-	public ResponseEntity<?> getRoomsAvailable(@PathVariable int id, @RequestBody RoomAvailableRequest roomAvailableRequest) {
+	public ResponseEntity<?> getRoomsAvailable(@PathVariable int id, @Valid @RequestBody RoomAvailableRequest roomAvailableRequest) {
 		
 		List<GetAvailableRoomsResponseDB> roomResponse = roomService.getAvailableRooms(id, roomAvailableRequest);
 		if (roomResponse != null) return new ResponseEntity<>(roomResponse, HttpStatus.OK);
