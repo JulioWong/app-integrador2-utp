@@ -1,9 +1,24 @@
 package com.granpalma.dto.demo.dto;
 
-public class RoomAvailableRequest {
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
+public class RoomAvailableRequest {
+	
+	@Valid
+	@NotNull(message = "Fecha de inicio es requerida")
+	@NotBlank(message = "Fecha de inicio no puede estar vacío")
 	private String since;
+	
+	@Valid
+	@NotNull(message = "Fecha de salida es requerida")
+	@NotBlank(message = "Fecha de salida no puede estar vacío")
 	private String to;
+	
+	@Valid
+	@NotNull(message = "La cantidad de personas es requerido")
+	@NotBlank(message = "La cantidad de personas no puede estar vacío")
 	private int quantity;
 	
 	public String getSince() {
