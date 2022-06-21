@@ -28,7 +28,6 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -64,6 +63,14 @@
 		    <artifactId>springfox-swagger-ui</artifactId>
 		    <version>2.8.0</version>
 		</dependency>
+		
+		<dependency>
+		    <groupId>software.aws.rds</groupId>
+		    <artifactId>aws-mysql-jdbc</artifactId>
+		    <version>1.0.0</version>
+		</dependency>
+		  
+ 
 	</dependencies>
 
 	<build>
