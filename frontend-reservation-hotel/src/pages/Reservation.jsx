@@ -100,10 +100,10 @@ const Reservation = () => {
 									variant="standard"
 									InputProps={{
 											inputProps: { 
-													max: 100, min: 10 
+													max: 100, min: 1 
 											}
 									}}
-									label="Habitaciones"
+									label="Adultos"
 								/>
 							</FormControl>
 						</Grid>
@@ -162,9 +162,6 @@ const Reservation = () => {
 											STANDARD MATRIMONIAL
 										</Box>
 										<Box sx={{pb:1, pl:2}}>
-											<Box component="span" fontWeight="bold">Acomodación máxima:</Box> 4 huéspedes (máximo 4 adultos, 3 niños, 2 infantes)
-										</Box>
-										<Box sx={{pb:1, pl:2}}>
 											Habitaciones confortables diseñadas para alojar a una persona, cuenta con una cama individual, equipadas con calefacción, insonorizadas, baño privado, ducha caliente, Smart Tv y televisión por cable, corriente eléctrica de 220V, teléfono e internet inalámbrico. Todas las tarifas incluyen desayuno diario, acceso libre al gimnasio y centro de negocios.
 										</Box>
 										<Grid container flexDirection="row-reverse" alignContent="center" alignItems="center">
@@ -191,9 +188,6 @@ const Reservation = () => {
 									<Grid item xs={12} md={9}>
 										<Box sx={{pb:1, pl:2}} fontWeight="bold">
 											STANDARD MATRIMONIAL
-										</Box>
-										<Box sx={{pb:1, pl:2}}>
-											<Box component="span" fontWeight="bold">Acomodación máxima:</Box> 4 huéspedes (máximo 4 adultos, 3 niños, 2 infantes)
 										</Box>
 										<Box sx={{pb:1, pl:2}}>
 											Habitaciones confortables diseñadas para alojar a una persona, cuenta con una cama individual, equipadas con calefacción, insonorizadas, baño privado, ducha caliente, Smart Tv y televisión por cable, corriente eléctrica de 220V, teléfono e internet inalámbrico. Todas las tarifas incluyen desayuno diario, acceso libre al gimnasio y centro de negocios.
