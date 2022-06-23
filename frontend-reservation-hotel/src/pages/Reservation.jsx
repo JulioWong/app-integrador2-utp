@@ -7,6 +7,9 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { Button, Container, FormControl, Grid, MenuItem } from '@mui/material';
 import { Box } from '@mui/system';
+import { useFetch } from '../hooks/useFetch';
+import constants from '../redux/constants';
+import { formatDate } from '../helpers/formatDate';
 
 const currencies = [
   {
@@ -29,11 +32,39 @@ const currencies = [
 
 const Reservation = () => {
 	const [currency, setCurrency] = React.useState('1');
+	const [filter, setFilter] = React.useState({
+		since: null,
+		to: null,
+		quantity: 1
+	});
 	
+	const { data: rooms, loading, error, refetch} = useFetch(`${constants.api}/hotel/1/room`,{
+		method: 'POST',
+		headers: {
+			"Content-Type":"application/json"
+		},
+        body: JSON.stringify({
+			since: "2022-06-01",
+			to: "2050-07-02",
+			quantity: 1
+		})
+	})
+
 	const handleChange = (event) => {
 		setCurrency(event.target.value);
 	};
-	const [value, setValue] = React.useState(null);
+
+	console.log(filter)
+
+	const handleSearchRooms = () => {
+		refetch(`${constants.api}/hotel/${currency}/room`,{
+			method: 'POST',
+			headers: {
+				"Content-Type":"application/json"
+			},
+			body: JSON.stringify(filter)
+		})
+	}
 
 	return (
 		<AppFrame>
@@ -69,9 +100,12 @@ const Reservation = () => {
 								<LocalizationProvider dateAdapter={AdapterDateFns}>
 									<DatePicker
 										label="Entrada"
-										value={value}
+										value={filter.since && new Date(filter.since)}
 										onChange={(newValue) => {
-											setValue(newValue);
+											setFilter({
+												...filter,
+												since: formatDate(newValue)
+											});
 										}}
 										renderInput={(params) => <TextField {...params}  variant="standard"/>}
 									/>
@@ -83,9 +117,12 @@ const Reservation = () => {
 								<LocalizationProvider dateAdapter={AdapterDateFns}>
 									<DatePicker
 										label="Salida"
-										value={value}
+										value={filter.to && new Date(filter.to)}
 										onChange={(newValue) => {
-											setValue(newValue);
+											setFilter({
+												...filter,
+												to: formatDate(newValue)
+											});
 										}}
 										renderInput={(params) => <TextField {...params}  variant="standard"/>}
 									/>
@@ -104,6 +141,12 @@ const Reservation = () => {
 											}
 									}}
 									label="Adultos"
+									onChange={(newValue) => {
+										setFilter({
+											...filter,
+											quantity: newValue.target.value
+										});
+									}}
 								/>
 							</FormControl>
 						</Grid>
@@ -139,70 +182,46 @@ const Reservation = () => {
 							</FormControl>
 						</Grid>
 						<Grid item xs={12} md={2}>
-							<Button variant="contained" style={{width:"100%",marginTop:12, backgroundColor: "#D6B637"}}>Buscar</Button>
+							<Button onClick={handleSearchRooms} variant="contained" style={{width:"100%",marginTop:12, backgroundColor: "#D6B637"}}>Buscar</Button>
 						</Grid>
 					</Grid>
 				</Box>
 
 
 				{
-					(1==1) ? (
+					(1==1 || !loading) ? (
 						<Box>
-							<Box
-								component={Grid}
-								sx={{m:3, p:2, borderRadius: 1, color:"#707070" }}
-								boxShadow={2}
-							>
-								<Grid container>
-									<Grid item xs={12} md={3} textAlign="center">
-										<img src="/1.jpg" width="100%" alt="" />
-									</Grid>
-									<Grid item xs={12} md={9}>
-										<Box sx={{pb:1, pl:2}} fontWeight="bold">
-											STANDARD MATRIMONIAL
-										</Box>
-										<Box sx={{pb:1, pl:2}}>
-											Habitaciones confortables diseñadas para alojar a una persona, cuenta con una cama individual, equipadas con calefacción, insonorizadas, baño privado, ducha caliente, Smart Tv y televisión por cable, corriente eléctrica de 220V, teléfono e internet inalámbrico. Todas las tarifas incluyen desayuno diario, acceso libre al gimnasio y centro de negocios.
-										</Box>
-										<Grid container flexDirection="row-reverse" alignContent="center" alignItems="center">
-											<Grid>
-												<Button variant="contained" href='/detalle/1'>Ver detalle</Button>
+							{rooms && rooms.map(room=>(
+								<div key={room.id}>
+									<Box
+										component={Grid}
+										sx={{m:3, p:2, borderRadius: 1, color:"#707070" }}
+										boxShadow={2}
+									>
+										<Grid container>
+											<Grid item xs={12} md={3} textAlign="center">
+												<img src={room.image} width="100%" alt=""/>
 											</Grid>
-											<Grid sx={{p:1, fontSize:25}} fontWeight="bold">
-												S/ 230.60
-											</Grid>
-										</Grid>
-									</Grid>
-								</Grid>
-							</Box>
-
-							<Box
-								component={Grid}
-								sx={{m:3, p:2, borderRadius: 1, color:"#707070" }}
-								boxShadow={2}
-							>
-								<Grid container>
-									<Grid item xs={12} md={3} textAlign="center">
-										<img src="/1.jpg" width="100%" alt=""/>
-									</Grid>
-									<Grid item xs={12} md={9}>
-										<Box sx={{pb:1, pl:2}} fontWeight="bold">
-											STANDARD MATRIMONIAL
-										</Box>
-										<Box sx={{pb:1, pl:2}}>
-											Habitaciones confortables diseñadas para alojar a una persona, cuenta con una cama individual, equipadas con calefacción, insonorizadas, baño privado, ducha caliente, Smart Tv y televisión por cable, corriente eléctrica de 220V, teléfono e internet inalámbrico. Todas las tarifas incluyen desayuno diario, acceso libre al gimnasio y centro de negocios.
-										</Box>
-										<Grid container flexDirection="row-reverse" alignContent="center" alignItems="center">
-											<Grid>
-												<Button variant="contained" href='/detalle/1'>Ver detalle</Button>
-											</Grid>
-											<Grid sx={{p:1, fontSize:25}} fontWeight="bold">
-												S/ 230.60
+											<Grid item xs={12} md={9}>
+												<Box sx={{pb:1, pl:2}} fontWeight="bold">
+													{room.title}
+												</Box>
+												<Box sx={{pb:1, pl:2}}>
+													{room.description}
+												</Box>
+												<Grid container flexDirection="row-reverse" alignContent="center" alignItems="center">
+													<Grid>
+														<Button variant="contained" href={`/detalle/${room.id}`}>Ver detalle</Button>
+													</Grid>
+													<Grid sx={{p:1, fontSize:25}} fontWeight="bold">
+														S/ {room.cost}
+													</Grid>
+												</Grid>
 											</Grid>
 										</Grid>
-									</Grid>
-								</Grid>
-							</Box>
+									</Box>
+								</div>
+							))}
 						</Box>
 					) : (
 						<Box
