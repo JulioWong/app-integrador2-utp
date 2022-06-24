@@ -200,14 +200,14 @@ const Reservation = () => {
 									>
 										<Grid container>
 											<Grid item xs={12} md={3} textAlign="center">
-												<img src={room.image} width="100%" alt=""/>
+												<img src={room.description} width="100%" alt=""/>
 											</Grid>
 											<Grid item xs={12} md={9}>
 												<Box sx={{pb:1, pl:2}} fontWeight="bold">
 													{room.title}
 												</Box>
 												<Box sx={{pb:1, pl:2}}>
-													{room.description}
+													{room.image}
 												</Box>
 												<Grid container flexDirection="row-reverse" alignContent="center" alignItems="center">
 													<Grid>
