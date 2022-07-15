@@ -1,4 +1,8 @@
--- gran_palma_hotel.estados_reservas definition
+CREATE DATABASE main;
+
+USE main;
+
+-- main.estados_reservas definition
 
 CREATE TABLE `estados_reservas` (
   `id_estado_reserva` int(11) NOT NULL AUTO_INCREMENT,
@@ -7,7 +11,24 @@ CREATE TABLE `estados_reservas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- gran_palma_hotel.hoteles definition
+-- main.habitaciones definition
+
+CREATE TABLE `habitaciones` (
+  `id_habitacion` int(11) NOT NULL AUTO_INCREMENT,
+  `id_tipo_cama` int(11) DEFAULT NULL,
+  `id_hotel` int(11) DEFAULT NULL,
+  `descripcion` varchar(1500) DEFAULT NULL,
+  `costo` double DEFAULT NULL,
+  `imagen` varchar(500) DEFAULT NULL,
+  `id_tipo_habitacion` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_habitacion`),
+  KEY `habitaciones_FK` (`id_hotel`) USING BTREE,
+  KEY `habitaciones_FK_1` (`id_tipo_habitacion`) USING BTREE,
+  KEY `habitaciones_FK_2` (`id_tipo_cama`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+
+-- main.hoteles definition
 
 CREATE TABLE `hoteles` (
   `id_hotel` int(11) NOT NULL AUTO_INCREMENT,
@@ -18,72 +39,7 @@ CREATE TABLE `hoteles` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 
--- gran_palma_hotel.pais definition
-
-CREATE TABLE `pais` (
-  `id_pais` int(11) NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id_pais`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
-
-
--- gran_palma_hotel.roles definition
-
-CREATE TABLE `roles` (
-  `id_rol` int(11) NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id_rol`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
--- gran_palma_hotel.tipos_camas definition
-
-CREATE TABLE `tipos_camas` (
-  `id_tipo_cama` int(11) NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(500) DEFAULT NULL,
-  PRIMARY KEY (`id_tipo_cama`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
--- gran_palma_hotel.tipos_documentos definition
-
-CREATE TABLE `tipos_documentos` (
-  `id_tipo_documento` int(11) NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id_tipo_documento`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
-
--- gran_palma_hotel.tipos_habitaciones definition
-
-CREATE TABLE `tipos_habitaciones` (
-  `id_tipo_habitacion` int(11) NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(500) DEFAULT NULL,
-  PRIMARY KEY (`id_tipo_habitacion`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
--- gran_palma_hotel.habitaciones definition
-
-CREATE TABLE `habitaciones` (
-  `id_habitacion` int(11) NOT NULL AUTO_INCREMENT,
-  `id_tipo_cama` int(11) DEFAULT NULL,
-  `id_hotel` int(11) DEFAULT NULL,
-  `descripcion` varchar(500) DEFAULT NULL,
-  `costo` double DEFAULT NULL,
-  `imagen` varchar(500) DEFAULT NULL,
-  `id_tipo_habitacion` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_habitacion`),
-  KEY `habitaciones_FK` (`id_hotel`),
-  KEY `habitaciones_FK_1` (`id_tipo_habitacion`),
-  KEY `habitaciones_FK_2` (`id_tipo_cama`),
-  CONSTRAINT `habitaciones_FK` FOREIGN KEY (`id_hotel`) REFERENCES `hoteles` (`id_hotel`),
-  CONSTRAINT `habitaciones_FK_1` FOREIGN KEY (`id_tipo_habitacion`) REFERENCES `tipos_habitaciones` (`id_tipo_habitacion`),
-  CONSTRAINT `habitaciones_FK_2` FOREIGN KEY (`id_tipo_cama`) REFERENCES `tipos_camas` (`id_tipo_cama`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
--- gran_palma_hotel.huespedes definition
+-- main.huespedes definition
 
 CREATE TABLE `huespedes` (
   `id_huesped` int(11) NOT NULL AUTO_INCREMENT,
@@ -97,30 +53,37 @@ CREATE TABLE `huespedes` (
   `email` varchar(100) DEFAULT NULL,
   `contrasenia` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id_huesped`),
-  KEY `huespedes_FK` (`id_tipo_documento`),
-  KEY `huespedes_FK_1` (`id_pais`),
-  CONSTRAINT `huespedes_FK` FOREIGN KEY (`id_tipo_documento`) REFERENCES `tipos_documentos` (`id_tipo_documento`),
-  CONSTRAINT `huespedes_FK_1` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id_pais`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+  KEY `huespedes_FK` (`id_tipo_documento`) USING BTREE,
+  KEY `huespedes_FK_1` (`id_pais`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 
--- gran_palma_hotel.usuarios definition
+-- main.pagos definition
 
-CREATE TABLE `usuarios` (
-  `id_usuario` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(500) DEFAULT NULL,
-  `apellido` varchar(500) DEFAULT NULL,
-  `usuario` varchar(500) DEFAULT NULL,
-  `contrasenia` varchar(500) DEFAULT NULL,
-  `estado` bit(1) DEFAULT NULL,
-  `id_rol` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_usuario`),
-  KEY `usuarios_FK` (`id_rol`),
-  CONSTRAINT `usuarios_FK` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id_rol`)
+CREATE TABLE `pagos` (
+  `id_pago` int(11) NOT NULL AUTO_INCREMENT,
+  `id_reserva` int(11) DEFAULT NULL,
+  `monto` double DEFAULT NULL,
+  `fecha_abono` datetime DEFAULT NULL,
+  `numero_operacion` varchar(100) DEFAULT NULL,
+  `banco` varchar(100) DEFAULT NULL,
+  `id_usuario` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_pago`),
+  KEY `pagos_FK` (`id_usuario`) USING BTREE,
+  KEY `pagos_FK_1` (`id_reserva`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- gran_palma_hotel.reservas definition
+-- main.pais definition
+
+CREATE TABLE `pais` (
+  `id_pais` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id_pais`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+
+-- main.reservas definition
 
 CREATE TABLE `reservas` (
   `id_reserva` int(11) NOT NULL AUTO_INCREMENT,
@@ -134,30 +97,76 @@ CREATE TABLE `reservas` (
   `cantidad_adultos` int(11) DEFAULT NULL,
   `cantidad_ninos` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_reserva`),
-  KEY `reservas_FK` (`id_usuario`),
-  KEY `reservas_FK_1` (`id_habitacion`),
-  KEY `reservas_FK_2` (`id_huesped`),
-  KEY `reservas_FK_3` (`id_estado_reserva`),
-  CONSTRAINT `reservas_FK` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`),
-  CONSTRAINT `reservas_FK_1` FOREIGN KEY (`id_habitacion`) REFERENCES `habitaciones` (`id_habitacion`),
-  CONSTRAINT `reservas_FK_2` FOREIGN KEY (`id_huesped`) REFERENCES `huespedes` (`id_huesped`),
-  CONSTRAINT `reservas_FK_3` FOREIGN KEY (`id_estado_reserva`) REFERENCES `estados_reservas` (`id_estado_reserva`)
+  KEY `reservas_FK` (`id_usuario`) USING BTREE,
+  KEY `reservas_FK_1` (`id_habitacion`) USING BTREE,
+  KEY `reservas_FK_2` (`id_huesped`) USING BTREE,
+  KEY `reservas_FK_3` (`id_estado_reserva`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- gran_palma_hotel.pagos definition
+-- main.roles definition
 
-CREATE TABLE `pagos` (
-  `id_pago` int(11) NOT NULL AUTO_INCREMENT,
-  `id_reserva` int(11) DEFAULT NULL,
-  `monto` double DEFAULT NULL,
-  `fecha_abono` datetime DEFAULT NULL,
-  `numero_operacion` varchar(100) DEFAULT NULL,
-  `banco` varchar(100) DEFAULT NULL,
-  `id_usuario` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_pago`),
-  KEY `pagos_FK` (`id_usuario`),
-  KEY `pagos_FK_1` (`id_reserva`),
-  CONSTRAINT `pagos_FK` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`),
-  CONSTRAINT `pagos_FK_1` FOREIGN KEY (`id_reserva`) REFERENCES `reservas` (`id_reserva`)
+CREATE TABLE `roles` (
+  `id_rol` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id_rol`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- main.tipos_camas definition
+
+CREATE TABLE `tipos_camas` (
+  `id_tipo_cama` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id_tipo_cama`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+
+-- main.tipos_documentos definition
+
+CREATE TABLE `tipos_documentos` (
+  `id_tipo_documento` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id_tipo_documento`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+
+-- main.tipos_habitaciones definition
+
+CREATE TABLE `tipos_habitaciones` (
+  `id_tipo_habitacion` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id_tipo_habitacion`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+
+-- main.usuarios definition
+
+CREATE TABLE `usuarios` (
+  `id_usuario` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(500) DEFAULT NULL,
+  `apellido` varchar(500) DEFAULT NULL,
+  `usuario` varchar(500) DEFAULT NULL,
+  `contrasenia` varchar(500) DEFAULT NULL,
+  `estado` bit(1) DEFAULT NULL,
+  `id_rol` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_usuario`),
+  KEY `usuarios_FK` (`id_rol`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- main.carrito_reservas definition
+
+CREATE TABLE `carrito_reservas` (
+  `id_carrito` int(11) NOT NULL AUTO_INCREMENT,
+  `id_huesped` int(11) DEFAULT NULL,
+  `id_habitacion` int(11) DEFAULT NULL,
+  `cantidad` int(11) DEFAULT NULL,
+  `fecha_entrada` date DEFAULT NULL,
+  `fecha_salida` date DEFAULT NULL,
+  PRIMARY KEY (`id_carrito`),
+  KEY `carrito_reservas_FK` (`id_habitacion`),
+  KEY `carrito_reservas_FK_1` (`id_huesped`),
+  CONSTRAINT `carrito_reservas_FK` FOREIGN KEY (`id_habitacion`) REFERENCES `habitaciones` (`id_habitacion`),
+  CONSTRAINT `carrito_reservas_FK_1` FOREIGN KEY (`id_huesped`) REFERENCES `huespedes` (`id_huesped`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;

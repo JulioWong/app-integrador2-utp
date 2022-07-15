@@ -14,8 +14,10 @@ import { Button, Container} from '@mui/material';
 import { getListCar } from '../redux/actions/carActions'
 import { connect } from 'react-redux';
 import RowCar from './components/RowCar'
+import { useNavigate } from 'react-router-dom';
 
 const ShoppingCar = ({ getListCar, listCar, currentGuest }) => {
+  const navigate = useNavigate(); 
   useEffect(() => { getListCar(currentGuest.id); }, [ getListCar ])
 
   const total = listCar.map(i => i.price).reduce((acc, value) => (acc + value), 0)
@@ -61,7 +63,7 @@ const ShoppingCar = ({ getListCar, listCar, currentGuest }) => {
         </TableContainer>
 
         <div style={{textAlign:"right", marginTop:30}}>
-          <Button variant="contained" href='/reserva/1' size="large">Confirmar reserva</Button>
+          <Button variant="contained" onClick={() => navigate(`/reserva/1`)} size="large">Confirmar reserva</Button>
         </div>
       </Container>
     </AppFrame>
