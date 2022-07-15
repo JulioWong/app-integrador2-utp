@@ -1,7 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AppFrame from './../components/AppFrame'
-
-
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -11,21 +9,19 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 import './../style.css';
-import { Button, Container, IconButton} from '@mui/material';
+import { Button, Container} from '@mui/material';
 
-import DeleteIcon  from '@mui/icons-material/Delete';
+import { getListCar } from '../redux/actions/carActions'
+import { connect } from 'react-redux';
+import RowCar from './components/RowCar'
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+const ShoppingCar = ({ getListCar, listCar, currentGuest }) => {
+  useEffect(() => { getListCar(currentGuest.id); }, [ getListCar ])
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-];
+  const total = listCar.map(i => i.price).reduce((acc, value) => (acc + value), 0)
+  const igv = total * 0.18;
+  const subtotal = total - igv;
 
-
-const ShoppingCar = () => {
   return (
     <AppFrame>
       <Container lg sx={{mt:5}}>
@@ -43,39 +39,22 @@ const ShoppingCar = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.name}
-            >
-              <TableCell size='small'>
-              <img src="/1.jpg" width="100px" alt=""/>
-              </TableCell>
-              <TableCell align="left">STANDARD MATRIMONIAL</TableCell>
-              <TableCell align="center" style={{fontWeight:500}}>1</TableCell>
-              <TableCell align="right" style={{fontWeight:500}}>
-                <IconButton aria-label="delete">
-                  <DeleteIcon />
-                </IconButton>
-              </TableCell>
-              <TableCell align="right" style={{fontWeight:500}}>S/250.00</TableCell>
-              <TableCell align="right" style={{fontWeight:500}}>S/250.00</TableCell>
-            </TableRow>
+          {listCar.map((car) => (
+            <RowCar car={car}></RowCar>
           ))}
-
-
               <TableRow>
                 <TableCell rowSpan={5} />
                 <TableCell colSpan={4}>Subtotal</TableCell>
-                <TableCell align="right">S/ {610.88}</TableCell>
+                <TableCell align="right">S/ {subtotal.toFixed(2)}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell colSpan={3}>Impuesto</TableCell>
                 <TableCell align="right">{`18%`}</TableCell>
-                <TableCell align="right">S/ {42.76}</TableCell>
+                <TableCell align="right">S/ {igv.toFixed(2)}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell colSpan={4}>Total</TableCell>
-                <TableCell align="right">S/ {653.64}</TableCell>
+                <TableCell align="right">S/ {total.toFixed(2)}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -89,4 +68,13 @@ const ShoppingCar = () => {
   )
 }
 
-export default ShoppingCar
+const mapStateToProps = state => ({
+  listCar: state.car.all,
+  currentGuest: state.guest.currentGuest
+})
+
+const mapDispachToProps = {
+  getListCar
+}
+
+export default connect(mapStateToProps, mapDispachToProps)(ShoppingCar)
