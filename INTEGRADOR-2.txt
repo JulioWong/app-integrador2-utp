@@ -1,0 +1,14 @@
+docker build -t app-integrador-2 .
+
+docker tag app-integrador-2:latest public.ecr.aws/d6m8v2k3/registry-app-integrador-2:latest
+docker push public.ecr.aws/d6m8v2k3/registry-app-integrador-2:latest
+
+
+docker run -d -p 8040:8040 --name integrador-2 public.ecr.aws/d6m8v2k3/registry-app-integrador-2
+
+
+
+docker logs 0853406a4b9d 
+
+
+docker pull public.ecr.aws/d6m8v2k3/registry-app-integrador-2:latest
